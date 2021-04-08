@@ -9,11 +9,16 @@ def test_delete_project(app, orm):
                       description="Description" + str(random.randrange(100)))
     if len(orm.get_project_list()) == 0:
         app.project.create(project)
-    old_projects = orm.get_project_list()
-    project = random.choice(old_projects)
     app.session.login("administrator", "root")
+    #old_projects = orm.get_project_list()
+    old_projects = app.soap.get_projects_list_for_user(app.config["webadmin"]["username"],
+                                                       app.config["webadmin"]["password"])
+    project = random.choice(old_projects)
     app.project.delete(project)
-    app.session.logout()
     old_projects.remove(project)
-    new_projects = orm.get_project_list()
+    #new_projects = orm.get_project_list()
+    new_projects = app.soap.get_projects_list_for_user(app.config["webadmin"]["username"],
+                                                       app.config["webadmin"]["password"])
+    app.session.logout()
     assert sorted(old_projects, key=Project.id_or_max) == sorted(new_projects, key=Project.id_or_max)
+    assert (project)

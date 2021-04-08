@@ -41,10 +41,6 @@ class ProjectHelper:
         wd = self.app.wd
         self.open_manage_proj_page()
         wd.find_element_by_link_text("Manage Projects").click()
-        wd.find_element_by_xpath("//tr[contains(@class,'row')]//a[contains(@href, 'id=%s')]" % project.id).click()
-       # projects = wd.find_elements_by_xpath("//table[3]//tr[contains(@class,'row') and not(contains(@class,'category'))]//a")
-       # project = random.choice(projects)
-       # id = project.get_attribute("href").split('=')[1]
-       # project.click()
+        wd.find_element_by_xpath("//tr[contains(@class,'row')]//a[@href = 'manage_proj_edit_page.php?project_id=%s']" % project.id).click()
         wd.find_element_by_xpath("//input[@value='Delete Project']").click()
         wd.find_element_by_xpath("//input[@value='Delete Project']").click()
